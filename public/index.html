@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestor de Proyectos</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="CSS/styles.css" />
+  </head>
+
+  <body class="bg-light">
+    <div class="container py-4">
+      <h1 class="text-center mb-4">Proyectos</h1>
+
+      <!-- Crear proyecto -->
+      <div class="card p-3 mb-4 shadow-sm">
+        <div class="row g-3">
+          <div class="col-md-8">
+            <input
+              id="projectName"
+              type="text"
+              class="form-control"
+              placeholder="Nombre del proyecto"
+            />
+          </div>
+          <select id="projectImage" class="form-select">
+            <option value="IMG/BBDD.jpg">Bases de Datos</option>
+            <option value="IMG/REDES.png">Redes</option>
+            <option value="IMG/WEB.jpg">Desarollo Web</option>
+            <option value="IMG/SistemasOperativos.jpg">
+              Sistemas Operativos
+            </option>
+            <option value="IMG/digi.jpg">Digitalización</option>
+            <option value="IMG/default.png">default.png</option>
+          </select>
+          <div class="col-md-4">
+            <button class="btn btn-primary w-100" onclick="addProject()">
+              Crear Proyecto
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div id="projectsList" class="row gy-3"></div>
+    </div>
+
+    <!-- Edit Project Modal -->
+    <div class="modal fade" id="editProjectModal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Editar Proyecto</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+
+          <div class="modal-body">
+            <!-- Campo oculto para guardar el id -->
+            <input type="hidden" id="editProjectId" />
+
+            <!-- Nombre -->
+            <div class="mb-3">
+              <label class="form-label">Nombre del proyecto</label>
+              <input type="text" id="editProjectName" class="form-control" />
+            </div>
+
+            <!-- Selector de imagen -->
+            <div class="mb-3">
+              <label class="form-label">Imagen</label>
+              <select id="editProjectImage" class="form-select"></select>
+            </div>
+
+            <!-- Preview -->
+            <img
+              id="previewProjectImage"
+              class="img-fluid rounded mt-2"
+              style="max-height: 120px"
+            />
+          </div>
+
+          <div class="modal-footer">
+            <button class="btn btn-secondary" data-bs-dismiss="modal">
+              Cancelar
+            </button>
+            <button class="btn btn-primary" onclick="saveProjectChanges()">
+              Guardar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="JS/script.js"></script>
+  </body>
+</html>

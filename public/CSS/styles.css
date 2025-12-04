@@ -1,0 +1,224 @@
+/* ------------------------
+   BODY Y CONTAINER
+------------------------ */
+body {
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #e3e7ee; /* fondo gris suave */
+    color: #1f1f2e;
+    min-height: 100vh;
+    padding-bottom: 40px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+}
+
+/* Títulos */
+h1, h3, h4 {
+    color: #1f1f2e;
+    font-weight: 600;
+}
+
+/* ------------------------
+   TARJETAS DE PROYECTO
+------------------------ */
+.card {
+    background: #ffffff;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    color: #1f1f2e;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+.card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.3s;
+    border-bottom: 2px solid #4f46e5;
+}
+
+.card img:hover {
+    transform: scale(1.05);
+}
+
+.card h4 {
+    margin-top: 10px;
+    font-size: 1.3rem;
+}
+
+/* Botones en tarjetas */
+.card .btn {
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.btn-primary {
+    background: #4f46e5;
+    border: none;
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background: #3730a3;
+}
+
+.btn-warning {
+    background: #f59f00;
+    border: none;
+    color: #fff;
+}
+
+.btn-warning:hover {
+    background: #b45309;
+}
+
+.btn-danger {
+    background: #e03131;
+    border: none;
+    color: #fff;
+}
+
+.btn-danger:hover {
+    background: #9c1c1c;
+}
+
+/* ------------------------
+   COLUMNAS DE TAREAS
+------------------------ */
+.tasks-column {
+    background: #f7f9fc; /* columna clara */
+    border-radius: 15px;
+    padding: 20px;
+    min-height: 350px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+    transition: transform 0.3s, background 0.3s;
+}
+
+.tasks-column h3 {
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+    color: #1f1f2e;
+}
+
+.tasks-column:hover {
+    transform: translateY(-3px);
+    background: #edf2f7;
+}
+
+/* ------------------------
+   TARJETAS DE TAREA
+------------------------ */
+.task {
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 12px;
+    cursor: grab;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: all 0.2s;
+    background: #ffffff;
+    color: #1f1f2e;
+    font-size: 0.95rem;
+}
+
+.task:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+/* Estados de tareas con colores suaves y legibles */
+.task.todo {
+    background: linear-gradient(135deg, #4dabf7, #74c0fc);
+    color: #1f1f2e;
+}
+
+.task.inprogress {
+    background: linear-gradient(135deg, #ffd43b, #ffe066);
+    color: #1f1f2e;
+}
+
+.task.done {
+    background: linear-gradient(135deg, #40c057, #63e6be);
+    color: #1f1f2e;
+}
+
+/* Información adicional de la tarea */
+.task strong {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 5px;
+}
+
+.task div {
+    font-size: 0.85rem;
+    margin-top: 3px;
+}
+
+/* Botones en tareas */
+.task .btn {
+    font-size: 0.75rem;
+    padding: 4px 8px;
+    border-radius: 6px;
+}
+
+/* Drag & drop */
+.task.dragging {
+    opacity: 0.7;
+    transform: scale(1.05);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+}
+
+/* ------------------------
+   FORMULARIOS
+------------------------ */
+input.form-control, select.form-select {
+    border-radius: 10px;
+    background: #ffffff;
+    color: #1f1f2e;
+    border: 1px solid #ccc;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+}
+
+input.form-control:focus, select.form-select:focus {
+    box-shadow: 0 0 8px rgba(79, 70, 229, 0.4);
+    outline: none;
+    border-color: #4f46e5;
+}
+
+/* ------------------------
+   MODALES
+------------------------ */
+.modal-content {
+    background: #ffffff;
+    border-radius: 15px;
+    padding: 20px;
+    color: #1f1f2e;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+/* ------------------------
+   RESPONSIVE
+------------------------ */
+@media (max-width: 768px) {
+    .tasks-column {
+        min-height: 250px;
+        padding: 15px;
+    }
+
+    .task {
+        padding: 12px;
+    }
+
+    .card img {
+        height: 180px;
+    }
+}
