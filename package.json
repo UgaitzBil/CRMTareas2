@@ -17,14 +17,14 @@
   "main": "next.config.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/UgaitzBil/CRMTareas.git"
+    "url": "git+https://github.com/UgaitzBil/CRMTareas2.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "bugs": {
-    "url": "https://github.com/UgaitzBil/CRMTareas/issues"
+    "url": "https://github.com/UgaitzBil/CRMTareas2/issues"
   },
-  "homepage": "https://github.com/UgaitzBil/CRMTareas#readme"
+  "homepage": "https://github.com/UgaitzBil/CRMTareas2#readme"
 }

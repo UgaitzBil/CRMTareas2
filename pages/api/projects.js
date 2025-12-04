@@ -1,5 +1,4 @@
-// pages/api/projects.js
-import { supabase } from "../../lib/supabase";
+import { supabase } from '../../lib/supabase';
 
 export default async function handler(req, res) {
   try {
