@@ -1,7 +1,7 @@
 // pages/api/projects.js
-const { supabase } = require("../../lib/supabase");
+import { supabase } from "../../lib/supabase";
 
-module.exports = async function handler(req, res) {
+export default async function handler(req, res) {
   try {
     if (req.method === "GET") {
       const { data, error } = await supabase.from("projects").select("*");
@@ -35,4 +35,4 @@ module.exports = async function handler(req, res) {
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
-};
+}

@@ -1,13 +1,4 @@
 // ----------------------
-// IMPORTAR SUPABASE
-// ----------------------
-import { createClient } from "@supabase/supabase-js";
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
-
-// ----------------------
 // IMÁGENES DISPONIBLES
 // ----------------------
 const availableImages = [
@@ -25,10 +16,13 @@ let projects = [];
 // FUNCIONES API
 // ----------------------
 async function fetchProjects() {
-  const { data, error } = await supabase.from("projects").select("*");
-  if (error) return alert("Error al cargar proyectos: " + error.message);
-  projects = data;
-  renderProjectsList();
+  try {
+    const res = await fetch("/api/projects");
+    projects = await res.json();
+    renderProjectsList();
+  } catch (err) {
+    alert("Error al cargar proyectos: " + err.message);
+  }
 }
 
 // ----------------------
@@ -42,11 +36,19 @@ async function addProject() {
 
   const project = { name, image, tasks: [] };
 
-  const { data, error } = await supabase.from("projects").insert([project]).select();
-  if (error) return alert("Error al crear proyecto: " + error.message);
+  try {
+    const res = await fetch("/api/projects", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(project)
+    });
 
-  projects.push(data[0]);
-  renderProjectsList();
+    const newProject = await res.json();
+    projects.push(newProject);
+    renderProjectsList();
+  } catch (err) {
+    alert("Error al crear proyecto: " + err.message);
+  }
 }
 
 function openEditProjectModal(id) {
@@ -70,20 +72,32 @@ async function saveProjectChanges() {
   const name = document.getElementById("editProjectName").value.trim();
   const image = document.getElementById("editProjectImage").value;
 
-  const { error } = await supabase.from("projects").update({ name, image }).eq("id", id);
-  if (error) return alert("Error al actualizar proyecto: " + error.message);
-
-  await fetchProjects();
-  bootstrap.Modal.getInstance(document.getElementById("editProjectModal")).hide();
+  try {
+    await fetch("/api/projects", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id, data: { name, image } })
+    });
+    await fetchProjects();
+    bootstrap.Modal.getInstance(document.getElementById("editProjectModal")).hide();
+  } catch (err) {
+    alert("Error al actualizar proyecto: " + err.message);
+  }
 }
 
 async function deleteProject(id) {
   if (!confirm("¿Eliminar este proyecto?")) return;
 
-  const { error } = await supabase.from("projects").delete().eq("id", id);
-  if (error) return alert("Error al eliminar proyecto: " + error.message);
-
-  await fetchProjects();
+  try {
+    await fetch("/api/projects", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id })
+    });
+    await fetchProjects();
+  } catch (err) {
+    alert("Error al eliminar proyecto: " + err.message);
+  }
 }
 
 function renderProjectsList() {
@@ -168,13 +182,16 @@ async function addTaskToProject() {
   const task = { id: Date.now(), name, user, status: "todo", sprint, startDate, endDate, hours };
   currentProject.tasks.push(task);
 
-  const { error } = await supabase
-    .from("projects")
-    .update({ tasks: currentProject.tasks })
-    .eq("id", currentProject.id);
-  if (error) return alert("Error al agregar tarea: " + error.message);
-
-  renderProjectTasks();
+  try {
+    await fetch("/api/projects", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: currentProject.id, data: { tasks: currentProject.tasks } })
+    });
+    renderProjectTasks();
+  } catch (err) {
+    alert("Error al agregar tarea: " + err.message);
+  }
 }
 
 function openEditTaskModal(taskId) {
@@ -201,14 +218,17 @@ async function saveTaskEdit() {
   task.endDate = document.getElementById("editTaskEndDate").value;
   task.hours = parseFloat(document.getElementById("editTaskHours").value);
 
-  const { error } = await supabase
-    .from("projects")
-    .update({ tasks: currentProject.tasks })
-    .eq("id", currentProject.id);
-  if (error) return alert("Error al editar tarea: " + error.message);
-
-  renderProjectTasks();
-  bootstrap.Modal.getInstance(document.getElementById("editTaskModal")).hide();
+  try {
+    await fetch("/api/projects", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: currentProject.id, data: { tasks: currentProject.tasks } })
+    });
+    renderProjectTasks();
+    bootstrap.Modal.getInstance(document.getElementById("editTaskModal")).hide();
+  } catch (err) {
+    alert("Error al editar tarea: " + err.message);
+  }
 }
 
 async function deleteTask(taskId) {
@@ -216,13 +236,16 @@ async function deleteTask(taskId) {
 
   currentProject.tasks = currentProject.tasks.filter((t) => t.id !== taskId);
 
-  const { error } = await supabase
-    .from("projects")
-    .update({ tasks: currentProject.tasks })
-    .eq("id", currentProject.id);
-  if (error) return alert("Error al eliminar tarea: " + error.message);
-
-  renderProjectTasks();
+  try {
+    await fetch("/api/projects", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: currentProject.id, data: { tasks: currentProject.tasks } })
+    });
+    renderProjectTasks();
+  } catch (err) {
+    alert("Error al eliminar tarea: " + err.message);
+  }
 }
 
 function renderProjectTasks() {
@@ -265,11 +288,19 @@ async function drop(ev, status) {
   const task = currentProject.tasks.find((t) => t.id == id);
   task.status = status;
 
-  const { error } = await supabase
-    .from("projects")
-    .update({ tasks: currentProject.tasks })
-    .eq("id", currentProject.id);
-  if (error) return alert("Error al mover tarea: " + error.message);
-
-  renderProjectTasks();
+  try {
+    await fetch("/api/projects", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: currentProject.id, data: { tasks: currentProject.tasks } })
+    });
+    renderProjectTasks();
+  } catch (err) {
+    alert("Error al mover tarea: " + err.message);
+  }
 }
+
+// ----------------------
+// Al inicio
+// ----------------------
+document.addEventListener("DOMContentLoaded", fetchProjects);
