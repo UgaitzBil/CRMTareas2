@@ -1,6 +1,7 @@
-import { supabase } from '../../lib/supabase';
+// pages/api/projects.js
+const { supabase } = require("../../lib/supabase.js");
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   try {
     if (req.method === "GET") {
       const { data, error } = await supabase.from("projects").select("*");
@@ -30,8 +31,9 @@ export default async function handler(req, res) {
     }
 
     res.setHeader("Allow", ["GET", "POST", "PUT", "DELETE"]);
-    return res.status(405).end(`Method ${req.method} Not Allowed`);
+    return res.status(405).json({ error: `Method ${req.method} Not Allowed` });
   } catch (err) {
-    return res.status(500).json({ error: err.message });
+    console.error(err);
+    return res.status(500).json({ error: err.message || "Error inesperado" });
   }
-}
+};
